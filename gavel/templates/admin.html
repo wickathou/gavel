@@ -204,6 +204,16 @@
             </form>
           </td>
         </tr>
+        {% if setting_closed %}
+          <tr>
+            <td class="compact" colspan="3">
+              <form action="{{ url_for('reset') }}" method="post">
+                <input type="submit" value="Reset" class="neutral">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+              </form>
+            </td>
+          </tr>
+        {% endif %}
       </tbody>
     </table>
   </div>
