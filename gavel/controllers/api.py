@@ -47,7 +47,11 @@ def decisions_dump():
     ] for d in decisions]
     return Response(utils.data_to_csv_string(data), mimetype='text/csv')
 
+# https://eu.junctionplatform.com/
+# https://www.hackjunctiontest.com/
+# Authorization Basic username:password
 @app.route('/api/users-link')
+@utils.protected_endpoint
 def users_link():
     response = json.dumps([
             {
