@@ -1,5 +1,7 @@
 <div class="info">
   <h2>{{ item.name }}</h2>
-  <p class="preserve-formatting">{{ item.description }}</p>
+  <p class="preserve-formatting">
+    <iframe src="{{ item.description }}" width="100%" height="300px"></iframe>
+  </p>
   <p><strong>Location: </strong>{{ item.location }}</p>
 </div>

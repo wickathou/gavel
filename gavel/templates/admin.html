@@ -44,7 +44,7 @@
           <td><a href="{{ url_for('item_detail', item_id=item.id) }}" class="colored">{{ item.id }}</a></td>
           <td>{{ item.name }}</td>
           <td>{{ item.location }}</td>
-          <td class="preserve-formatting">{{ item.description }}</td>
+          <td class="preserve-formatting render-link">{{ item.description }}</td>
           <td>{{ item.mu | round(4) }}</td>
           <td>{{ item.sigma_sq | round(4) }}</td>
           <td>{{ item_counts.get(item.id, 0) }}</td>
@@ -204,6 +204,16 @@
             </form>
           </td>
         </tr>
+        {% if setting_closed %}
+          <tr>
+            <td class="compact" colspan="3">
+              <form action="{{ url_for('reset') }}" method="post">
+                <input type="submit" value="Reset" class="neutral">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+              </form>
+            </td>
+          </tr>
+        {% endif %}
       </tbody>
     </table>
   </div>
@@ -220,5 +230,13 @@ var tables = [
 for (var i = 0; i < tables.length; i++) {
   new Tablesort(tables[i]);
 }
+
+const renderLinkItems = document.querySelectorAll('.render-link');
+renderLinkItems.forEach((item) => {
+  const content = item.textContent;
+  if (content.length && content.trim().startsWith("http")) {
+    item.innerHTML = `<a href="${content.trim()}" target="_blank">${content}</a>`;
+  }
+});
 </script>
 {% endblock %}
