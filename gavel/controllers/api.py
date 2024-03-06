@@ -59,4 +59,8 @@ def users_link():
                 'email': a.email,
             } for a in Annotator.query.all()
         ])
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    # response.headers.add("Access-Control-Allow-Origin", "*")
     return Response(response, mimetype='application/json')
