@@ -2,6 +2,7 @@ from gavel import app
 from gavel.models import *
 import gavel.utils as utils
 from flask import Response, url_for
+from flask_cors import CORS
 import json
 
 @app.route('/api/items.csv')
@@ -50,7 +51,9 @@ def decisions_dump():
 # https://eu.junctionplatform.com/
 # https://www.hackjunctiontest.com/
 # Authorization Basic username:password
+cors = CORS(app, resources={r"/api/users-link": {"origins": ["https://eu.junctionplatform.com", "https://www.hackjunctiontest.com", "http://localhost:3000"]}})
 @app.route('/api/users-link')
+# @cross_origin()
 @utils.protected_endpoint
 def users_link():
     response = json.dumps([
@@ -59,8 +62,4 @@ def users_link():
                 'email': a.email,
             } for a in Annotator.query.all()
         ])
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add("Access-Control-Allow-Headers", "*")
-    response.headers.add("Access-Control-Allow-Methods", "*")
-    # response.headers.add("Access-Control-Allow-Origin", "*")
     return Response(response, mimetype='application/json')
