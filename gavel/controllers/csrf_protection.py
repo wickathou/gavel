@@ -4,7 +4,7 @@ from flask import abort, request, session
 
 @app.before_request
 def csrf_protect():
-    if request.method == "POST" and request.path != "/api/users-link" :
+    if request.method == "POST":
         token = session.get('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
